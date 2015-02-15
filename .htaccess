@@ -1,0 +1,22 @@
+# Disable directory browsing:
+Options All -Indexes
+# Prevent folder listing:
+#IndexIgnore *
+# Prevent access to any file:
+#<FilesMatch "^.*$">
+#Order Allow,Deny
+#Deny from all
+#</FilesMatch>
+
+<IfModule mod_rewrite.c>
+RewriteEngine on
+
+RewriteRule ^(user)/?(&notice=.*)?$ test/index.php?Control=$1&Action=null$2
+RewriteRule ^(user)/(.+)/?(&notice=.*)?$ test/index.php?Control=$1&Action=$2$3
+RewriteRule ^$ test/index.php
+RewriteRule ^.+[^(js|css)]$ test/index.php
+
+</IfModule>
+
+#ErrorDocument 403 /test/index.php
+#ErrorDocument 404 /test/index.php
