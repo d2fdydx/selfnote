@@ -8,11 +8,11 @@ class UserController {
 		$users = User::All();
 		//print_r($users);
 		
-		require(BASE_URI.'views/user/user_index.html');
+		require(BASE_URI.'views/user/user_index.html.inc');
 		
 	}
 	public function add(){
-		require(BASE_URI.'views/user/add.html');
+		require(BASE_URI.'views/user/add.html.inc');
 	
 	}
 	public function create(){

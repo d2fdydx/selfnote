@@ -1,6 +1,6 @@
 <?php
 
-require_once ($_SERVER['DOCUMENT_ROOT'].'/test/common/config.inc.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/test/common/config.php.inc');
 ob_start();
 ?>
 <!DOCTYPE html>
@@ -17,7 +17,7 @@ ob_start();
 
 
 <header>
-<?php require_once (BASE_URI.'views/header.html') ; ?>
+<?php require_once (BASE_URI.'views/header.html.inc') ; ?>
 
 </header>
 
