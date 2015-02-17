@@ -14,10 +14,10 @@ Options All -Indexes
 <IfModule mod_rewrite.c>
 RewriteEngine on
 
+
 RewriteRule ^(user)/?(&notice=.*)?$ test/index.php?Control=$1&Action=null$2
 RewriteRule ^(user)/(.+)/?(&notice=.*)?$ test/index.php?Control=$1&Action=$2$3
-RewriteRule ^$ test/index.php
-RewriteRule ^.+[^(js|css)]$ test/index.php
+#RewriteRule ^/.*
 
 </IfModule>
 

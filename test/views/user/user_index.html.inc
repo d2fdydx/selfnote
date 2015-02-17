@@ -13,17 +13,22 @@ ETD;
 <tr>
 	<td> id </td>
 	<td> name </td>
+	<td> nickname </td>
+	<td> delete </td>
 </tr>
 <?php 
 
 
-$users->setFetchMode(PDO::FETCH_ASSOC);
-
 while ($user = $users->fetch()) {
-
- echo ' <tr> <td>'. $user["id"].' </td> <td>'.$user["name"].'</td> </tr>';
- 
+ echo '<tr>';
+ echo '  <td>'. $user["id"].' </td> <td>'.$user["user_name"].'</td>  <td>'.$user["nickname"].'</td> ';
+ echo '<td><a href="" class="Critical" value='.$user['id'].'> delete</a></td>';
+ echo '</tr>';
  } 
  
  ?>
+ 
+ <div id="dialog-confirm" title="Delete?" style="display: none">
+  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span> Are you sure?</p>
+</div>
  </table>

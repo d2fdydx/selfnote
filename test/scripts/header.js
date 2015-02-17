@@ -64,7 +64,6 @@ function drawText(canvas, context) {
 	
 }
 
-$(document).ready(function(){
+
 	
-	createheader();
-})
+createheader();

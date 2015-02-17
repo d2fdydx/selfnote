@@ -10,8 +10,15 @@ ob_start();
 <meta charset="utf-8"/>
 <title>welcome</title>
 <link href="<?php echo "//".BASE_URL."style/basic.css"?>" rel="stylesheet" >
-<script src="<?php echo "//".BASE_URL."scripts/jquery-1.11.2.min.js"?>"> </script>
+<link rel="stylesheet" href="<?php echo "//".BASE_URL."style/blue/jquery-ui.css"?>">
+<script><?php
+	echo 'var USER_URL="'.USER_URL.'";';
+?>
 
+</script>
+<script src="<?php echo "//".BASE_URL."scripts/jquery-1.11.2.min.js"?>"> </script>
+<script src="<?php echo "//".BASE_URL."style/blue/jquery-ui.js"?>"> </script>
+<script src="<?php echo "//".BASE_URL."scripts/basic.js"?>"> </script>
 </head>
 <body>
 
@@ -26,7 +33,7 @@ ob_start();
 
 
 <div id="main" >
-<?php require_once (BASE_URI.'route.php') ;
+<?php require_once (BASE_URI.'controllers/CentralController.php.inc') ;
 
 ?>
 </div>
