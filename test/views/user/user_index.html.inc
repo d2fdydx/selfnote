@@ -12,16 +12,21 @@ ETD;
 <table>
 <tr>
 	<td> id </td>
-	<td> name </td>
-	<td> nickname </td>
-	<td> delete </td>
+	<td> User Name </td>
+	<td> Nickname </td>
+	<td> Grade </td>
+	<td> Edit </td>
+	<td> Delete </td>
 </tr>
 <?php 
 
 
 while ($user = $users->fetch()) {
+
  echo '<tr>';
  echo '  <td>'. $user["id"].' </td> <td>'.$user["user_name"].'</td>  <td>'.$user["nickname"].'</td> ';
+ echo "<td>{$user['user_levels.name']} </td>";
+ echo '<td> <a href="/user/edit/'.$user['id'].'"> Edit </a> </td>';
  echo '<td><a href="" class="Critical" value='.$user['id'].'> delete</a></td>';
  echo '</tr>';
  } 

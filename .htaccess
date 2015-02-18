@@ -15,8 +15,9 @@ Options All -Indexes
 RewriteEngine on
 
 
-RewriteRule ^(user)/?(&notice=.*)?$ test/index.php?Control=$1&Action=null$2
-RewriteRule ^(user)/(.+)/?(&notice=.*)?$ test/index.php?Control=$1&Action=$2$3
+RewriteRule ^(user)/?$ test/index.php?Control=$1&Action=null
+RewriteRule ^(user)/([^/]+)/?$ test/index.php?Control=$1&Action=$2
+RewriteRule ^(user)/([^/]+)/(\d+)/?$ test/index.php?Control=$1&Action=$2&id=$3
 #RewriteRule ^/.*
 
 </IfModule>
