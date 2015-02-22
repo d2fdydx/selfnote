@@ -1,0 +1,21 @@
+
+
+<canvas width="200" height="50" id="headcanvas">
+    <p> Welcome! (please update your browser)</p> 
+</canvas>
+<nav>
+<li>
+<?php if (!User::isLogin()) { ?>
+
+<ul><a href="/user/login"> Login</a> </ul>
+<?php }else{ ?>
+<ul> <a href="/user/logout"> Logout</a> </ul>
+<?php } ?>
+
+</li>
+</nav>
+
+
+<script src="<?php echo "//".BASE_URL."scripts/header.js";?>"></script>
+
+

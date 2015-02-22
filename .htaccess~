@@ -7,10 +7,10 @@ Options All -Indexes
 #Order Allow,Deny
 #Deny from all
 #</FilesMatch>
-<Files ~ "\.inc.(?:php|html)">
-	Order allow,deny
-	Deny from all
-</Files>
+#<Files ~ "\.inc.(?:php|html)">
+#	Order allow,deny
+#	Deny from all
+#</Files>
 <IfModule mod_rewrite.c>
 RewriteEngine on
 

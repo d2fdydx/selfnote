@@ -33,7 +33,7 @@ ob_start();
 
 
 <div id="main" >
-<?php require_once (BASE_URI.'controllers/CentralController.inc.php') ;
+<?php require_once (BASE_URI.'controllers/CentralController.php.inc') ;
 
 ?>
 </div>
