@@ -61,7 +61,7 @@ class UserController {
 		echo '<h1> adding </h1>';
 		if ($user->save()==true){
 			
-			
+			FlashMessage("Added {$inputs['user_name']}");	
 			unset($user);
 			header('Location: http://'.USER_URL."user");
 			exit;

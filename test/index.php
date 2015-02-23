@@ -38,8 +38,16 @@ ob_start();
 ?>
 </div>
 
+<footer>
+<?php include_once ('views/footer.inc.html') ?>
+</footer>
 
 </body>
 </html>
 
-<?php ob_end_flush();?>
+<?php
+//=============last ===========
+FlashMessage::cleanUp();
+
+
+ob_end_flush();?>

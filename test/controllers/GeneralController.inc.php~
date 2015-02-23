@@ -1,0 +1,13 @@
+<?php
+
+	class GeneralController{
+
+		public function index(){
+			//render
+			include_once();
+
+
+		}
+
+	}
+?>

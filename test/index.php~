@@ -33,13 +33,21 @@ ob_start();
 
 
 <div id="main" >
-<?php require_once (BASE_URI.'controllers/CentralController.php.inc') ;
+<?php require_once (BASE_URI.'controllers/CentralController.inc.php') ;
 
 ?>
 </div>
 
+<footer>
+<?php include_once ('views/footer.inc.html') ?>
+</footer>
 
 </body>
 </html>
 
-<?php ob_end_flush();?>
+<?php
+//=============last ===========
+
+
+
+ob_end_flush();?>

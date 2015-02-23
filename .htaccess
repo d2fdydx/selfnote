@@ -7,10 +7,14 @@ Options All -Indexes
 #Order Allow,Deny
 #Deny from all
 #</FilesMatch>
-<Files ~ "\.inc.(?:php|html)">
+<Files ~ "\.inc(?:.(?:php|html))?">
 	Order allow,deny
 	Deny from all
 </Files>
+#<Directory ~ "se$">
+#	Order allow,deny
+#	Deny from all
+#</Directory>
 <IfModule mod_rewrite.c>
 RewriteEngine on
 
@@ -18,7 +22,7 @@ RewriteEngine on
 RewriteRule ^(user)/?$ test/index.php?Control=$1&Action=null
 RewriteRule ^(user)/([^/]+)/?$ test/index.php?Control=$1&Action=$2
 RewriteRule ^(user)/([^/]+)/(\d+)/?$ test/index.php?Control=$1&Action=$2&id=$3
-#RewriteRule ^/.*
+RewriteRule ^$ test/index.php
 
 </IfModule>
 
