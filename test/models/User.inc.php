@@ -14,12 +14,12 @@
 		
 		public function isAdmin(){
 			if ($this->grade!=null){
-				if (in_array($this->grade,UserLevels::$s_admin)){
+				if (in_array($this->grade,UserLevel::$s_admin)){
 					return true;
 				}
 			}else{
 				$this->setGrade();	
-				if (in_array($this->grade,UserLevels::$s_admin)){
+				if (in_array($this->grade,UserLevel::$s_admin)){
 					return true;
 				}
 			}
@@ -43,11 +43,11 @@
 
 		//get the user level grade
 		private function setGrade(){
-				$this->join('UserLevels');
+				$this->join('UserLevel');
 				$result = $this->getData();
 				$row = $result->fetch();
-				$this->grade = $row['grade'];
-				self::$setUser($this);
+				$this->grade = $row['user_levels.grade'];
+				self::setUser($this);
 
 		}
 

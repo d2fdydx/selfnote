@@ -216,14 +216,14 @@ abstract class ActiveRecord{
 		}
 		$where_str= implode(',',$where);
 		$query = "SELECT * FROM ".static::$s_table.' WHERE '.$where_str;
-		print_r($query);
+		//print_r($query);
 		$tmp = $pdo -> prepare($query);
 		if ($tmp == false){
 			if ($DEBUG)
 				print_r($tmp->errorInfo());
 			//exit(1);	
 		}
-		print_r($values);		
+		//print_r($values);		
 		$re= $tmp ->execute($values);
 		if ($re == false){
 			echo 'false';
@@ -233,8 +233,9 @@ abstract class ActiveRecord{
 	
 		$params = $tmp->fetch();
 		if ($params == false){
-			echo '<h1> no record </h1>';
-			return ;
+			FlashMessage::setMsg('No match');
+			header('Location: ');
+			exit;
 		}
 		//print_r ($params);
 		return new static($params);
@@ -260,21 +261,23 @@ abstract class ActiveRecord{
 	}
 	// parameter: Class
 	public function join($table){
+		global $DEBUG;
 		$this->reset();
 		$table_name = $table::$s_table;
 		$tableId =$table_name."_id";
-		if (!in_array($table, static::$s_field)){
+		if (!in_array($tableId, static::$s_field)){
 			if ($DEBUG){
 				echo '<h1> join null table</h1>';
 			}
 			return false;
 		}
 		$this->m_from[]=$table;
-		$this->m_where[]= static::$s_table.$tableId." = {$table}.id";
+		$this->m_where[]= static::$s_table.'.'.$tableId." = {$table::$s_table}.id";
 		return $this;
 	
 	}
 	public function getData($temp=[], $joinfield=[]){
+		global $DEBUG;
 		if (count($temp) ==0) {
 			$fields	= array( static::$s_table.'.* ');
 		}else{
@@ -291,10 +294,11 @@ abstract class ActiveRecord{
 			}
 		}
 		//from: store class Name
-		foreach ($from as  $f	){
+		foreach ($this->m_from as  $f	){
 			$joinField = $f::$s_field;
+			//renaming
 			foreach($joinField as $jf){
-				$fields[] = $f.'.'.$jf." as '{$f}.{$jf}'";  
+				$fields[] = $f::$s_table.'.'.$jf." as '{$f::$s_table}.{$jf}'";  
 			}
 			$from_query[]=$f::$s_table;
 		}
@@ -303,18 +307,25 @@ abstract class ActiveRecord{
 		//this table + join table
 		
 		$from_query[]=static::$s_table;
-		$from_query = implode(",",$this->from );
+		$from_str = implode(",",$from_query );
+		//=======================
 		//where caluse
-		$where[]= static::$s_table.".id= $this->m_id";
-		$where = implode (",",$this->where);
+		$this->m_where[]= static::$s_table.".id= $this->m_id";
+		$where_query = implode (' AND ',$this->m_where);
 
 		//query
-		$query .= 'SELECT '.$fields_str.' '.$from.' '.$where;
+		$query = 'SELECT '.$fields_str.' FROM  '.$from_str.' WHERE  '.$where_query;
 		if ( ($pdo = self::getPDO())==NULL){
 				return false;
 		}
 		
-		$result = $pdo->query($str);
+		$result = $pdo->query($query);
+		if (!$result){
+		if ($DEBUG){
+			print_r($query);
+			print_r($pdo->errorInfo());
+		}
+		}
 		$result->setFetchMode(PDO::FETCH_ASSOC);
 		$this->reset();
 		return $result;
@@ -334,8 +345,8 @@ abstract class ActiveRecord{
 
 	}	
 	public function reset(){
-		$this->from=array();
-		$this->where=array();
+		$this->m_from=array();
+		$this->m_where=array();
 	
 	}
 	

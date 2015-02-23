@@ -7,8 +7,6 @@
 <label for="f_Password"> Password </label>
 <input type="password" name="object[password]" id="f_Password" required/></br>
 
-<label for="f_RePassword"> Re-Password </label>
-<input type="password" name="object[re_password]" id="f_RePassword" required/></br>
 
 
 

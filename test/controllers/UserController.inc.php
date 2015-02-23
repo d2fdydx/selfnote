@@ -3,7 +3,9 @@
 class UserController {
 	
 	public function index(){
-				
+		$this->requireAdmin();
+
+					
 		$users = User::All(false,'UserLevel');
 		if ($users==false){
 			echo '<p> error </p>';
@@ -16,12 +18,14 @@ class UserController {
 		
 	}
 	public function add(){
+		$this->requireAdmin();
 		$grades = UserLevel::All();
 		
 		require(BASE_URI.'views/user/add.inc.html');
 	
 	}
 	public function edit($id){
+		$this->requireAdmin();
 		
 		if (!ctype_digit($id)){
 			return;
@@ -34,6 +38,7 @@ class UserController {
 	public function login(){
 		if (User::isLogin()){
 			header('Location: /');	
+			exit();
 		}
 		else {
 			require(BASE_URI.'views/user/login.inc.html');
@@ -42,10 +47,14 @@ class UserController {
 	}	
 	public function logout(){
 		User::logout();
-
+		ob_end_clean();
+		FlashMessage::setMsg('You have logged out');
+		header('Location: /');		
+		exit();
 	}	
 	//===============post=================
 	public function create(){
+		$this->requireAdmin();
 		$inputs = $_POST['object'];
 		//print_r ($inputs);
 		if (!$this->verifyInputs($inputs)){
@@ -69,6 +78,7 @@ class UserController {
 		unset($user);
 	}
 	public function update($id){
+		$this->requireAdmin();
 		if (!ctype_digit($id)){
 			return;
 		}
@@ -95,6 +105,7 @@ class UserController {
 	
 	
 	public function delete(){
+		$this->requireAdmin();
 		ob_clean();
 		if(!($user = User::find($_POST['id']))){
 			echo '<h3> not found </h3>';
@@ -119,15 +130,14 @@ class UserController {
 	//	print_r($inputs);
 		$pwd = $inputs['password'];
 		if(empty($pwd) || empty(trim($inputs['user_name']))){
-			echo '<h1> empty/invalid </h1>';
-			return false;
+			FlashMessage::setMsg('Empty/invalid');
+			header('Location: /user/login');
 		}		
 		
 		$para = array( 'user_name' => htmlentities($inputs['user_name']));
 		//print_r ($para);
 		$user_obj = User::findBy($para);	
 		if ($user_obj == false){
-	//		echo '????';
 			return ;
 
 
@@ -136,9 +146,14 @@ class UserController {
 		if( password_verify($pwd,$user_obj->getObjectData('password'))){
 			$user_obj->setObjectData('password','');
 			User::setSessionUser($user_obj);
-			echo '<h1> yes </h1>';
-		}else
-			echo '<h1> password wrong </h1>'; 
+			FlashMessage::setMsg('You have logged in');
+			ob_end_clean();
+			header('Location: /');
+			exit;
+		}else{
+			Flash::setMsg( 'Password wrong'); 
+			header('Location: /user/login');
+		}	
 	}
 //===============private =====================	
 	private function verifyInputs($inputs){
@@ -157,5 +172,15 @@ class UserController {
 		}
 		return true;
 	}
-	
+	private function requireAdmin(){
+		global $s_user;
+		if ($s_user != null ){
+			if ($s_user->isAdmin())
+				return;	
+		}
+		FlashMessage::setMsg('Invalid Path');
+		header('Location: /');
+		exit;
+
+	}	
 }
