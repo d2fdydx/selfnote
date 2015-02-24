@@ -1,18 +1,24 @@
 
 
 <canvas width="200" height="50" id="headcanvas">
-    <p> Welcome! (please update your browser)</p> 
+    <p> Welcome! </p> 
 </canvas>
 <nav>
-<li>
-<?php if (!User::isLogin()) { ?>
+<ul>
+<?php if (!User::isLogin()) { 
+//for not logged in
+?>
 
-<ul><a href="/user/login"> Login</a> </ul>
-<?php }else{ ?>
-<ul> <a href="/user/logout"> Logout</a> </ul>
+<li><a href="/user/login"> Login</a> </li>
+<li> <a href="/user/register">Register</a> </li>
+
+<?php }else{ 
+//for logged in
+?>
+<li> <a href="/user/logout"> Logout</a> </li>
 <?php } ?>
 
-</li>
+</ul>
 </nav>
 
 

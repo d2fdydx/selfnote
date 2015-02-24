@@ -4,11 +4,16 @@
 		static protected  $s_table = 'users';
 		static protected $s_field = array('user_name','nickname','password','user_levels_id');
 		protected $grade=null;
-		protected function initField(){
-			
-									
-			$this->m_field=array_combine(static::$s_field, array_fill(0, count(static::$s_field), ''));
-			$this->m_field['user_levels_id']=0;
+		protected function initField($argv){
+			if (!isset($argv['user_levels_id'])){ // default grade
+				$result = UserLevel::findBy(array('name'=>'normal'));
+				if ($result == null){
+					include(BASE_URI.'views/error.inc.html');
+					exit;
+				}
+				//print_r($result);
+				$this->m_field['user_levels_id']=$result->getObjectData('id');
+			}	
 		
 		}
 		
@@ -47,7 +52,7 @@
 				$result = $this->getData();
 				$row = $result->fetch();
 				$this->grade = $row['user_levels.grade'];
-				self::setUser($this);
+				self::setSessionUser($this);
 
 		}
 

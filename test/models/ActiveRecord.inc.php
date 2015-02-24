@@ -14,10 +14,11 @@ abstract class ActiveRecord{
 	
 	
 	// set m_field 
-	abstract protected function initField();
+	abstract protected function initField($argv);
 	
 	public function __construct( $argv){
-		$this->initField();
+		$this->m_field=array_combine(static::$s_field, array_fill(0, count(static::$s_field), ''));
+		$this->initField($argv);
 		//print_r ($argv);
 		//echo '<h1> hihi</h1>';
 		foreach ( $argv as $key => $value ){
@@ -54,7 +55,7 @@ abstract class ActiveRecord{
 	}
 	
 	public function save(){
-		
+		global $DEBUG;	
 		if ( ($pdo = self::getPDO())==NULL){
 			return false;
 		}
@@ -122,7 +123,8 @@ abstract class ActiveRecord{
 				$m_id = $pdo->lastInsertId();	
 				return true;
 			}else {
-				print_r ($sth->errorInfo());
+				if ($DEBUG)
+					print_r ($sth->errorInfo());
 				echo ' <h1> Fail!! </h1>';
 				
 				return false;
@@ -197,7 +199,9 @@ abstract class ActiveRecord{
 		 
 		
 	}
-	public static function findBy($field=[]){
+	//expect field to be assoc array
+	//return object
+	public static function findBy($field=[],$isArray=false){
 		if (count($field)==0) {
 			//print_r ($field);	
 			return null;
@@ -233,9 +237,7 @@ abstract class ActiveRecord{
 	
 		$params = $tmp->fetch();
 		if ($params == false){
-			FlashMessage::setMsg('No match');
-			header('Location: ');
-			exit;
+			return null;
 		}
 		//print_r ($params);
 		return new static($params);
@@ -333,6 +335,8 @@ abstract class ActiveRecord{
 	}
 	
 	public function getObjectData($field){
+		if ($field=='id')
+			return $this->m_id;
 		if (in_array($field,static::$s_field)){
 				return $this->m_field[$field]; 
 		}
@@ -349,7 +353,9 @@ abstract class ActiveRecord{
 		$this->m_where=array();
 	
 	}
-	
+	public function __toString(){
+		print_r($this->m_field);
+	}	
 	
 }
 

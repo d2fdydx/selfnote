@@ -5,6 +5,9 @@ define ('BASE_URL',"{$_SERVER['SERVER_NAME']}:1234/test/");
 define ('USER_URL',"{$_SERVER['SERVER_NAME']}:1234/");
 require_once(BASE_URI.'/se/db_config.inc');
 //phpinfo();
+spl_autoload_register('models_loader');
+spl_autoload_register('controllers_loader');
+
 session_start();
 //==============================
 $host = substr ($_SERVER['HTTP_HOST'],0,5);
@@ -50,8 +53,7 @@ function controllers_loader($class_name){
 	}
 	
 }
-spl_autoload_register('models_loader');
-spl_autoload_register('controllers_loader');
+
 
 
 //user

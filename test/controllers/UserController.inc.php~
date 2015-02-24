@@ -17,6 +17,14 @@ class UserController {
 		require(BASE_URI.'views/user/user_index.inc.html');
 		
 	}
+	public function register(){
+		if (User::isLogin()){
+			header('Location: /');	
+			exit();
+		}
+		include(BASE_URI.'views/user/register.inc.html');
+
+	}
 	public function add(){
 		$this->requireAdmin();
 		$grades = UserLevel::All();
@@ -54,28 +62,41 @@ class UserController {
 	}	
 	//===============post=================
 	public function create(){
-		$this->requireAdmin();
 		$inputs = $_POST['object'];
-		//print_r ($inputs);
+		if(!$this->requireAdmin(true)){
+			if(isset($inputs['user_levels_id'])){
+				unset($inputs['user_levels_id']);
+			}
+		}
 		if (!$this->verifyInputs($inputs)){
-			echo '<p> error </p>';
+			FlashMessage::setMsg('inputs invalid');
+		//	header("Location: /user/register"); 
 			exit;
 		}
 		$inputs['user_name'] = htmlentities($inputs['user_name']);
 		$inputs['nickname'] = htmlentities($inputs['nickname']);
 		$inputs['password'] = password_hash($inputs['password'], PASSWORD_DEFAULT);
-		
+		if (!$this->uniqueName($inputs)){
+			FlashMessage::setMsg('User Name has been used');
+			header("Location: /user/register");
+			exit;
+		}
+		print_r("@@@@");	
 		
 		$user = new User($inputs);
-		echo '<h1> adding </h1>';
+
+
 		if ($user->save()==true){
 			
 			FlashMessage::setMsg("Added {$inputs['user_name']}");	
 			unset($user);
-			header('Location: http://'.USER_URL."user");
+			header('Location: /');
 			exit;
 		}
 		unset($user);
+		FlashMessage::setMsg('Fail to add');
+		header('Location: /user/register');
+		exit;
 	}
 	public function update($id){
 		$this->requireAdmin();
@@ -100,6 +121,8 @@ class UserController {
 			header('Location: http://'.USER_URL."user");
 			exit;
 		}
+		//sth error
+		require(BASE_URI.'views/error.inc.html');
 		unset($user);
 	}
 	
@@ -138,6 +161,7 @@ class UserController {
 		//print_r ($para);
 		$user_obj = User::findBy($para);	
 		if ($user_obj == false){
+			require(BASE_URI.'views/error.inc.html');
 			return ;
 
 
@@ -157,8 +181,12 @@ class UserController {
 	}
 //===============private =====================	
 	private function verifyInputs($inputs){
+		global $DEBUG;
 		if ($inputs['password'] != $inputs['re_password']){
 			//error	
+			if ($DEBUG){
+				echo 'pasword not equal';
+			}
 			//header('Location: '.BASE_URL.'user/add');
 			return false;
 		}
@@ -168,19 +196,31 @@ class UserController {
 		if (empty($inputs['user']) && empty($inputs['user_name'])){
 			//error 
 			//header('Location: '.BASE_URL.'user/add');
+			if ($DEBUG){
+				echo 'pasword not equal';
+			}
 			return false;
 		}
 		return true;
 	}
-	private function requireAdmin(){
+	private function requireAdmin($custom=false){
 		global $s_user;
 		if ($s_user != null ){
-			if ($s_user->isAdmin)
-				return;	
+			if ($s_user->isAdmin())
+				return true;	
 		}
-		FlashMessage::setMsg('Invalid Path');
-		header('Location: /');
-		exit;
-
+		if (!$custom){
+			FlashMessage::setMsg('Invalid Path');
+			header('Location: /');
+			exit;
+		}
+		return false;
 	}	
+	private function uniqueName($inputs){
+		$result= User::findBy(array('user_name'=>$inputs['user_name']));
+		if ($result!=null){
+			return false;
+		}
+		return true;
+	}
 }

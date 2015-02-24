@@ -25,7 +25,7 @@ if ($local){
 	
 
 }
-
+$DEBUG=true;
 function my_error_handler($e_number, $e_message, $e_file, $e_line, $e_vars) {
 	global $DEBUG;
 
