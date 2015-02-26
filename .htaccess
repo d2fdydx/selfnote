@@ -7,7 +7,7 @@ Options All -Indexes
 #Order Allow,Deny
 #Deny from all
 #</FilesMatch>
-<Files ~ "\.inc(?:.(?:php|html))?">
+<Files ~ "\.inc(?:\.(?:php|html))?">
 	Order allow,deny
 	Deny from all
 </Files>

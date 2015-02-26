@@ -1,24 +1,32 @@
 <?php FlashMessage::display()?>
 <form name="f_user" id="f_user" action="" method="post">
 <fieldset>
+
+<div class="row">
 <label for="f_name"> Name </label>
-<input type="text" name="object[user_name]" id="f_name" required/></br>
+<input type="text" name="object[user_name]" id="f_name" required/>
+</div>
 
+<div class="row">
 <label for="f_nickname"> nickname </label>
-<input type="text" name="object[nickname]" id="f_nickname" required/></br>
+<input type="text" name="object[nickname]" id="f_nickname" required/>
+</div>
 
+<div class="row">
 <label for="f_Password"> Password </label>
-<input type="password" name="object[password]" id="f_Password" required/></br>
+<input type="password" name="object[password]" id="f_Password" required/>
+</div>
 
+<div class="row">
 <label for="f_RePassword"> Re-Password </label>
-<input type="password" name="object[re_password]" id="f_RePassword" required/></br>
-
+<input type="password" name="object[re_password]" id="f_RePassword" required/>
+</div>
 
 	
 
-</select></br>
-
-<input type="submit"/>
+<div class="row">
+<input type="submit" value="submit" />
+</div>
 <input type="hidden" name="Action" value="add"/>
 <input type="hidden" name="Control" value="user"/>
 </fieldset>
