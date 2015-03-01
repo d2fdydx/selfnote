@@ -33,12 +33,12 @@
 
 		public function isNormal(){
 			if ($this->grade !=null){
-				if (in_array($this->grade,UserLevels::$s_normal)){
+				if (in_array($this->grade,UserLevel::$s_normal)){
 					return true;
 				}
 			}else{
 				$this->setGrade();	
-				if (in_array($this->grade,UserLevels::$s_normal)){
+				if (in_array($this->grade,UserLevel::$s_normal)){
 					return true;
 				}
 			}

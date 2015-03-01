@@ -203,19 +203,6 @@ class UserController {
 		}
 		return true;
 	}
-	private function requireAdmin($custom=false){
-		global $s_user;
-		if ($s_user != null ){
-			if ($s_user->isAdmin())
-				return true;	
-		}
-		if (!$custom){
-			FlashMessage::setMsg('Invalid Path');
-			header('Location: /');
-			exit;
-		}
-		return false;
-	}	
 	private function uniqueName($inputs){
 		$result= User::findBy(array('user_name'=>$inputs['user_name']));
 		if ($result!=null){

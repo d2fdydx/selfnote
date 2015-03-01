@@ -114,7 +114,9 @@ abstract class ActiveRecord{
 			echo "$query";
 			
 			if (($sth = $pdo->prepare($query))==false){
-					return false;
+				if($DEBUG)
+					print_r ($sth->errorInfo());
+				return false;
 			}
 			
 			
@@ -335,6 +337,8 @@ abstract class ActiveRecord{
 	}
 	
 	public function getObjectData($field){
+		if ($field=='id')
+			return $this->m_id;
 		if (in_array($field,static::$s_field)){
 				return $this->m_field[$field]; 
 		}

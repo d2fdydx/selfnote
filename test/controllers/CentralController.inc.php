@@ -1,12 +1,11 @@
 <?php
 //include=======================
 require_once ('route/user_route.inc.php');
-
+require_once('route/note_route.inc.php');
 require_once('route/general_route.inc.php');
 
 //===================get =======================
 	if ($_SERVER['REQUEST_METHOD'] == 'GET'){
-
 		if (isset($_GET['Control'])){
 			
 			switch ($_GET['Control']) {
@@ -14,6 +13,10 @@ require_once('route/general_route.inc.php');
 					userGetRoute();
 			
 					break;
+				case 'note':
+					noteGetRoute();
+					break;
+
 				default:
 					generalGetRoute();
 					break;
@@ -35,6 +38,8 @@ require_once('route/general_route.inc.php');
 					userPostRoute();
 			
 					break;
+				case 'note':
+					notePostRoute();
 				default:
 					break;
 				

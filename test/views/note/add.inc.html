@@ -1,0 +1,29 @@
+<?php FlashMessage::display()?>
+
+<form action="" method="post">
+<fieldset>
+<div class="row">
+<label for="f_title">Title </label>
+<input type="text" name="object[title]" id="f_title" required/>
+</div>
+
+<div class="row">
+<label for="f_excerpt">Excerpt </label>
+<textarea name="object[excerpt]" id="f_excerpt" cols="30" rows="5" maxlength="50">
+</textarea>
+</div>
+
+<div class="row">
+<label for="f_content">Content </label>
+<textarea name="object[content]" id="f_content" cols="30" rows="5" maxlength="50">
+</textarea>
+</div>
+
+<div class="row">
+<input type="submit" value="login"/>
+</div>
+<input type="hidden" name="Action" value="create"/>
+<input type="hidden" name="Control" value="note"/>
+</fieldset>
+</form>
+

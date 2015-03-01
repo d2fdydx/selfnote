@@ -15,7 +15,7 @@ display: table-row;
 }
 form label{
 display: table-cell;
-vertical-align: top;
+vertical-align: text-top;
 
 
 }

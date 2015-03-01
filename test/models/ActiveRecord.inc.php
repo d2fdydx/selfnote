@@ -99,12 +99,12 @@ abstract class ActiveRecord{
 			$template = "";
 			
 			foreach ( $this->m_field as $key =>  $value){
-					
+				if (!empty($value)){	
 					$key_temp[]= $key;	
 					$value_temp[]= $value;
 					
 					$template .=' ? ,';
-					
+				}	
 			}
 			$key_temp= join(',', $key_temp);
 			$template=substr($template,0,-1);
@@ -114,7 +114,9 @@ abstract class ActiveRecord{
 			echo "$query";
 			
 			if (($sth = $pdo->prepare($query))==false){
-					return false;
+				if($DEBUG)
+					print_r ($sth->errorInfo());
+				return false;
 			}
 			
 			

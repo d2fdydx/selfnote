@@ -19,9 +19,9 @@ Options All -Indexes
 RewriteEngine on
 
 
-RewriteRule ^(user)/?$ test/index.php?Control=$1&Action=null
-RewriteRule ^(user)/([^/]+)/?$ test/index.php?Control=$1&Action=$2
-RewriteRule ^(user)/([^/]+)/(\d+)/?$ test/index.php?Control=$1&Action=$2&id=$3
+RewriteRule ^([^/\W]+)/?$ test/index.php?Control=$1&Action=null
+RewriteRule ^([^/\W]+)\/([^/\W]+)\/?$ test/index.php?Control=$1&Action=$2
+RewriteRule ^([^/\W]+)/([^/\W]+)/(\d+)/?$ test/index.php?Control=$1&Action=$2&id=$3
 RewriteRule ^$ test/index.php
 
 </IfModule>

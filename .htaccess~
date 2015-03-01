@@ -7,7 +7,7 @@ Options All -Indexes
 #Order Allow,Deny
 #Deny from all
 #</FilesMatch>
-<Files ~ "\.inc(?:.(?:php|html))?">
+<Files ~ "\.inc(?:\.(?:php|html))?">
 	Order allow,deny
 	Deny from all
 </Files>
@@ -19,10 +19,10 @@ Options All -Indexes
 RewriteEngine on
 
 
-RewriteRule ^(user)/?$ test/index.php?Control=$1&Action=null
-RewriteRule ^(user)/([^/]+)/?$ test/index.php?Control=$1&Action=$2
-RewriteRule ^(user)/([^/]+)/(\d+)/?$ test/index.php?Control=$1&Action=$2&id=$3
-#RewriteRule ^/.*
+#RewriteRule ^([^/\W]+)/?$ test/index.php?Control=$1&Action=null
+RewriteRule ^([^/\W]+)\/([^/\W]+)\/?$ test/index.php?Control=$1&Action=$2
+#RewriteRule ^([^/\W]+)/([^/\W]+)/(\d+)/?$ test/index.php?Control=$1&Action=$2&id=$3
+#RewriteRule ^$ test/index.php
 
 </IfModule>
 
