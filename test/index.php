@@ -11,6 +11,9 @@ ob_start();
 <title>welcome</title>
 <link href="<?php echo "//".BASE_URL."style/basic.css"?>" rel="stylesheet" >
 <link rel="stylesheet" href="<?php echo "//".BASE_URL."style/blue/jquery-ui.css"?>">
+
+<link rel="stylesheet" href="<?php echo "//".BASE_URL."style/jHtmlArea.css"?>">
+
 <script><?php
 	echo 'var USER_URL="'.USER_URL.'";';
 ?>
